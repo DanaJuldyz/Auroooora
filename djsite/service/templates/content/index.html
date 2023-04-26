@@ -1,0 +1,20 @@
+{% extends 'layouts/layout.html' %}
+{% block content %}
+<ul class="list-articles">
+    {% for s in services %}
+        <li><div class="article-panel">
+    <p class="first">Category: {{s.cat}}</p>
+    <p class="last">Date: {{s.time_update|date:"d-m-Y H:i:s"}}</p>
+</div>
+            {% if s.photo %}
+                   <p><img class="img-article-left thumb" src="{{s.photo.url}}"></p>
+            {% endif %}
+            <h2>{{s.name}}</h2>
+        <p>{{s.content|linebreaks}}</p>
+        <div class="clear"></div>
+        <p class="link-read-post"><a href="{{ s.get_absolute_url }}">More</a></p>
+        </li>
+    {% endfor %}
+
+</ul>
+{% endblock %}

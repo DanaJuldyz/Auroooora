@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'layouts/layout.html' %}
 
-</body>
-</html>
+{% block content %}
+<h1>{{service.name}}</h1>
+
+{% if service.photo %}
+<p><img class="img-article-left" src="{{service.photo.url}}"></p>
+{% endif %}
+
+{{service.content|linebreaks}}
+{% endblock %}

@@ -3,9 +3,9 @@ from django.db.models import Count
 
 from service.models import *
 
-menu = [{ 'title': "About Site",'url_name': 'about'},
-        { 'title': "Add Product",'url_name': 'create'},
-        { 'title': "Contact Us",'url_name': 'contact'},
+menu = [{ 'title': "About Site", 'url_name': 'about'},
+        { 'title': "Add Product", 'url_name': 'create'},
+        { 'title': "Contact Us", 'url_name': 'contact'},
 ]
 
 class DataMixin:
@@ -23,6 +23,4 @@ class DataMixin:
 
         context['menu'] = user_menu
         context['cats'] = cats
-        if 'cat_selected' not in context:
-            context['cat_selected'] = 0
         return context

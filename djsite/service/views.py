@@ -5,11 +5,18 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, FormView
+from rest_framework import generics
+from rest_framework import *
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+
 from .forms import *
 from .models import *
+from .permissions import IsAdminOrReadOnly
+from .serializers import serviceSerializer
 from .utils import DataMixin,menu
 from django.contrib.auth.mixins import  LoginRequiredMixin
-
+import rest_framework
 
 
 def user_context(title):
@@ -19,14 +26,12 @@ def user_context(title):
 class ServiceIndex(DataMixin,ListView):
     model = Service
     template_name = 'content/index.html'
-    context_object_name = 'services'
+    context_object_name = 'service'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Main Page")
-        return  dict(list(context.items())+list(c_def.items()))
-
-
+        return dict(list(context.items())+list(c_def.items()))
     def get_queryset(self):
         return Service.objects.filter(is_published=True).select_related('cat')
 
@@ -34,7 +39,7 @@ class ServiceIndex(DataMixin,ListView):
 
 def About(request):
     contact_list = Service.objects.all()
-    paginator = Paginator(contact_list,3)
+    paginator = Paginator(contact_list, 6)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -89,12 +94,10 @@ class ShowService(DetailView,DataMixin):
 class ServiceCategory(DataMixin, ListView):
     model = Service
     template_name = 'content/index.html'
-    context_object_name = 'service'
+    context_object_name = 'services'
     allow_empty = False
-
     def get_queryset(self):
         return Service.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
-
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         c = Category.objects.get(slug=self.kwargs['cat_slug'])
@@ -134,5 +137,28 @@ class LoginUser(DataMixin,LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
+class serviceAPIListPagination(PageNumberPagination):
+    page_size = 3
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
 
+
+class serviceAPIList(generics.ListCreateAPIView):
+    queryset = Service.objects.all()
+    serializer_class = serviceSerializer
+    permission_classes = (IsAuthenticatedOrReadOnly, )
+    pagination_class = serviceAPIListPagination
+
+
+
+class serviceAPIUpdate(generics.RetrieveUpdateAPIView):
+    queryset = Service.objects.all()
+    serializer_class = serviceSerializer
+    permission_classes = (IsAuthenticated, )
+
+
+class serviceAPIDestroy(generics.RetrieveDestroyAPIView):
+    queryset = Service.objects.all()
+    serializer_class = serviceSerializer
+    permission_classes = (IsAdminOrReadOnly, )
 

@@ -14,6 +14,7 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('service/<slug:service_slug>/', ShowService.as_view(), name='service'),
     path('category/<slug:cat_slug>/', ServiceCategory.as_view(), name='category'),
+
 ]
 
 

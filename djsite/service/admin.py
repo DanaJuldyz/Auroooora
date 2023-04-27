@@ -4,7 +4,7 @@ from django.utils.safestring import mark_safe
 from .models import*
 
 class TourAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'photo', 'is_published')
+    list_display = ('id', 'name', 'photo', 'is_published','cat')
     list_display_links = ('id', 'name')
     search_fields = ('name', 'content')
     list_editable = ('is_published',)
@@ -31,4 +31,4 @@ admin.site.register(Service, TourAdmin)
 admin.site.register(Category, CategoryAdmin)
 
 admin.site.site_title  = 'Administration page for Service'
-admin.site.site_header  = 'Administration page for Service'
+admin.site.site_header  = 'Hello my OverLord'

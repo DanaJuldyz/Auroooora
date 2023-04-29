@@ -94,7 +94,7 @@ class ShowService(DetailView,DataMixin):
 class ServiceCategory(DataMixin, ListView):
     model = Service
     template_name = 'content/index.html'
-    context_object_name = 'services'
+    context_object_name = 'service'
     allow_empty = False
     def get_queryset(self):
         return Service.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True)
@@ -138,7 +138,7 @@ class LoginUser(DataMixin,LoginView):
         return reverse_lazy('home')
 
 class serviceAPIListPagination(PageNumberPagination):
-    page_size = 3
+    page_size = 8
     page_size_query_param = 'page_size'
     max_page_size = 1000
 

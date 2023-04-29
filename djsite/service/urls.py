@@ -5,8 +5,8 @@ from.views import *
 
 
 urlpatterns = [
-    path('', ServiceIndex.as_view(), name='home'),
-    path('about/', About, name='about'),
+    path('home/', ServiceIndex.as_view(), name='home'),
+    path('', About, name='about'),
     path('addpage/', AddService.as_view(), name='create'),
     path('contact/', ContactFormView.as_view(), name='contact'),
     path('login/', LoginUser.as_view(), name='login'),

@@ -1,20 +1,42 @@
 {% extends 'layouts/layout.html' %}
 {% block content %}
-<ul class="list-articles">
-    {% for s in services %}
-        <li><div class="article-panel">
-    <p class="first">Category: {{s.cat}}</p>
-    <p class="last">Date: {{s.time_update|date:"d-m-Y H:i:s"}}</p>
-</div>
-            {% if s.photo %}
-                   <p><img class="img-article-left thumb" src="{{s.photo.url}}"></p>
-            {% endif %}
-            <h2>{{s.name}}</h2>
-        <p>{{s.content|linebreaks}}</p>
-        <div class="clear"></div>
-        <p class="link-read-post"><a href="{{ s.get_absolute_url }}">More</a></p>
-        </li>
-    {% endfor %}
+ <section class="bg-light py-5">
+                <div class="container px-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-xxl-8">
+                            <div class="text-center my-5">
+                                <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">Продукции</span></h2>
+                                <p class="lead mb-4" style="color: black">Біз сізге жоғарғы сападағы Косметикалық заттарды көрсетіміз</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+<div class="row">
+  {% for s in service %}
+  <div class="col-3">
+        <article class="card">
+            <img
+              class="card__background"
+              src="{{s.photo.url}}"
+              alt="Photo of Cartagena's cathedral at the background and some colonial style houses"
+              width="1920"
+              height="2193"
+            />
+            <div class="card__content | flow">
+              <div class="card__content--container | flow">
+                <h2 class="card__title">{{s.name}}</h2>
 
-</ul>
+                <p class="card__description">
+                  {{s.price}} $
+                </p>
+              </div>
+              <a class="card__button" href="{{s.get_absolute_url}}" style="text-decoration: none" >Read more</a>
+            </div>
+        </article>
+    </div>
+  {% endfor %}
+</div>
+<hr>
+
 {% endblock %}

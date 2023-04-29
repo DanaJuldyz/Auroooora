@@ -2,16 +2,31 @@
 
 {% block content %}
 <h1> {{title}}</h1>
+<section class="py-5">
+                <div class="container px-5">
+                    <!-- Contact form-->
+                    <div class="bg-light rounded-4 py-5 px-4 px-md-5">
+                        <div class="text-center mb-5">
+                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                            <h1 class="fw-bolder">Отправь сообщение </h1>
+                            <p class="lead fw-normal text-muted mb-0">Косметологу что узнать крутые советы</p>
+                        </div>
+                        <div class="row gx-5 justify-content-center" style="margin-right: 210px">
+                            <div class="col-lg-8 col-xl-6">
+                                <form method="post">
+                                    {% csrf_token %}
 
-<form method="post">
-    {% csrf_token %}
-
-<div class="form-error">{{ form.non_field_errors }}</div>
-{% for f in form %}
-<p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
-<div class="form-error">{{ f.errors }}</div>
-{% endfor %}
-    <button type="submit">Login</button>
-</form>
+                                <div class="form-error">{{ form.non_field_errors }}</div>
+                                {% for f in form %}
+                                <p align="right" style="color:black"><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>
+                                <div class="form-error">{{ f.errors }}</div>
+                                {% endfor %}
+                                    <button class="btn btn-success" type="submit">Login</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</section>
 
 {% endblock %}

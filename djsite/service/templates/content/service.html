@@ -1,11 +1,12 @@
 {% extends 'layouts/layout.html' %}
 
 {% block content %}
-<h1>{{service.name}}</h1>
+<div class="container">
 
-{% if service.photo %}
-<p><img class="img-article-left" src="{{service.photo.url}}"></p>
-{% endif %}
-
-{{service.content|linebreaks}}
+  <h1> Атауы: {{service.name}}</h1>
+  <h4> Описание: {{service.content}}</h4>
+  {% if service.photo %}
+  <p> <img class="img-article-left" src="{{service.photo.url}}" width="700" height="500" ></p>
+  {% endif %}
+</div>
 {% endblock %}
